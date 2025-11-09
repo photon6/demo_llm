@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermDoc AI Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: auto
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+        },
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1 px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dermatology PLM Demo</h1>
+    <form id="demo-form" enctype="multipart/form-data">
+        <label for="prompt">Enter your query: (e.g., "Diagnose this skin condition"):</label>
+        <input type="text" id="prompt" name="prompt" required>
+        
+        <!-- <label for="image">Upload skin image (optional):</label>
+        <input type="file" id="image" name="image" accept="image/*">  -->
+        
+        <button type="submit">Submit</button>
+    </form>
+    
+    <div id="result"></div>
+    
+    <script>
+        
+        const form = document.getElementById('demo-form');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+            formData.append('prompt', document.getElementById('prompt').value);
+
+            try {
+                resultDiv.innerText = "Processing...";
+                const response = await fetch('http://localhost:8000/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    const errorText_Preamble = "Fetch failed with status: "
+                    constole.error(errorText_Preamble, response.status, "Body: ", errorText)
+                    throw new Error(errorText_Preamble + '${response.status}: ${errorText}');
+                }
+
+                const data = await response.json();
+                resultDiv.innerText = `<strong>Response:</strong> ${data.response}`;
+
+            } catch (error) {
+                console.error("Full lerror details: ", error)
+                resultDiv.innerText = `Error: ${error.message}`;
+            }   
+        });
+    </script>
+</body>
+</html>

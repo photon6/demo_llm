@@ -1,0 +1,6 @@
+{
+    "model_id" : "brucewayne0459/OpenBioLLm-Derm",
+    "host": "0.0.0.0",
+    "backend_port": 8000,
+    "ui_port": 3000
+}
