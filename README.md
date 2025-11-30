@@ -1,4 +1,4 @@
-# Dermatology LLM Demo
+#Dermatology LLM Demo
 
 This project sets up a minimum viable product (MVP) demo for a dermatology-focused large language model (LLM) using the "brucewayne0459/OpenBioLLm-Derm" model. It includes a Python backend with FastAPI for inference and a Node.js frontend for the web UI. The setup is designed for local development on macOS ARM (Apple Silicon), but can be adapted.
 
@@ -47,7 +47,7 @@ Create a `config.json` file in the project root (for Python backend) with the fo
 {
   "model_id": "brucewayne0459/OpenBioLLm-Derm",
   "host": "0.0.0.0",
-  "port": 8000
+  "backend_port": 8000
 }
 ```
 
@@ -55,7 +55,7 @@ For the Node.js frontend, create a `config.json` in its directory:
 
 ```json
 {
-  "port": 3000
+  "ui_port": 3000
 }
 ```
 
